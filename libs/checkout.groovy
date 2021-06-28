@@ -1,6 +1,3 @@
-def call(String opn){
-  sh """
-      cd \$TOOLS
-      python \$TOOLS/pw_build_svc_cli.py --operation ${opn} --flow-id ${FlowId} --config '${Config}'
-  """                         
+def call(){
+  checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/hazimastan/TestPyproject.git']]])                       
 }
