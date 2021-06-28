@@ -1,10 +1,24 @@
+library "Libs@${PipelineBranch}"
+
+def stageData = ['parallel1','parallel2']
+
+def generateStage(stageId) {
+    return {
+        stage("Parallel: ${stageId}") {
+                echo "This is ${stageId}."
+                build job: 'ParallelTest', wait: true, parameters: [string(name: 'stageId', value: stageId)], propagate: false
+        }
+    }
+}
+
+
 pipeline {
     agent any
     
     stages {
         stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/hazimastan/TestPyproject.git']]])
+                checkout()
             }
         }
         stage('RunPython') {
@@ -12,10 +26,19 @@ pipeline {
                 bat 'more test.txt'
             }
         }
-        stage('Test') {
+        stage('ParallelMain') {
             steps {
-                echo "test"
+                script {
+                    parallel stageData.collectEntries { ["${it}" : generateStage(it)] }
+                }
             }
         }
+        stage('Final') {
+            steps {
+               echo "Delete Workspace"
+               cleanWs()
+            }
+        }
+        
     }
 }
