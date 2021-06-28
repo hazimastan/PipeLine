@@ -18,9 +18,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    checkout()
-                }                
+                    checkout()              
             }
         }
         stage('RunPython') {
