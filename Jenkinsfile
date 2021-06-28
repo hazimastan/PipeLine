@@ -1,4 +1,4 @@
-@Library('shared-library@${PipelineBranch}')
+@Library('shared-library@master')
 
 def stageData = ['parallel1','parallel2']
 
