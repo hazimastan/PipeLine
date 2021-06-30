@@ -1,4 +1,6 @@
-@Library('shared-library@master') _
+//@Library('shared-library@master') _
+
+@Library('PW-Libs@${PipelineBranch}')
 
 def stageData = ['parallel1','parallel2']
 
