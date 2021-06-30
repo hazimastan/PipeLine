@@ -25,7 +25,7 @@ pipeline {
                 }
             }
         }
-        stage('RunPython') {
+        stage('PrintFile') {
             steps {
                 bat 'more test.txt'
             }
